@@ -22,7 +22,7 @@ const I18N = {
     vocabsHelp:"Names, products and jargon your meetings use. Every new transcript starts with these words so they get spelled right.",
     you:"You",youHelp:"Your name is added to every new transcript as a participant, so we know which voice is you.",
     listen:"Listen",pastTerms:"From past meetings",
-    foundTerms:"Found in this meeting",termAdded:"Added to vocabulary",
+    foundTerms:"Found in this meeting",less:"Show less",termAdded:"Added to vocabulary",
     fixTerm:"Fix spelling",termFixed:n=>n?`Fixed ${n} ${n===1?"place":"places"} and added to vocabulary`:"Added to vocabulary",
     vocabMore:(n,m)=>`Using the ${m} most recent of your ${n} words. Pick more from past meetings below.`,vocabOver:m=>`Only the last ${m} words are used when transcribing.`,
     record:"Record",recording:"Recording",fromRec:"Recorded here",recTitle:d=>`Meeting ${d}`,recStop:"Stop and transcribe",recSound:"Sound coming in",recQuiet:"Quiet",
@@ -48,7 +48,7 @@ const I18N = {
     vocabsHelp:"회의에 자주 나오는 회사, 제품, 사람 이름과 전문 용어. 새 전사마다 이 단어들로 시작해서 철자가 정확해집니다.",
     you:"나",youHelp:"내 이름은 새 전사마다 참석자로 들어갑니다. 그래야 어느 목소리가 나인지 압니다.",
     listen:"미리 듣기",pastTerms:"지난 회의 용어",
-    foundTerms:"이 회의에서 찾은 용어",termAdded:"용어집에 추가했습니다",
+    foundTerms:"이 회의에서 찾은 용어",less:"접기",termAdded:"용어집에 추가했습니다",
     fixTerm:"철자 고치기",termFixed:n=>n?`${n}곳을 고치고 용어집에 추가했습니다`:"용어집에 추가했습니다",
     vocabMore:(n,m)=>`용어집 ${n}개 중 최근 ${m}개를 넣었습니다. 아래 지난 회의 용어에서 더 고를 수 있습니다.`,vocabOver:m=>`전사에는 마지막 ${m}개만 쓰입니다.`,
     record:"녹음",recording:"녹음 중",fromRec:"이 컴퓨터에서 녹음",recTitle:d=>`회의 ${d}`,recStop:"종료하고 전사",recSound:"소리가 들어오는 중",recQuiet:"조용함",
@@ -323,9 +323,10 @@ $("#vfound").addEventListener("keydown",e=>{ const i=e.target.closest(".termedit
 $("#vfound").addEventListener("focusout",e=>{ if(e.target.closest(".termedit")) setTimeout(()=>{ if(!document.activeElement?.closest?.("#vfound")) found(); }); });
 /* names and jargon the local model found in this meeting, one click to add to the vocabulary */
 const askedTerms = new Set();
+let foundOpen = false;
 function found(){
   const have = new Set(memory.vocab.map(w=>w.toLowerCase())), fresh = (doc.terms||[]).filter(w=>!have.has(w.toLowerCase()));
-  $("#vfound").innerHTML = fresh.length ? `<span>${T("foundTerms")}</span>` + fresh.map(w=>`<span class="fterm"><button class="term" data-v="${esc(w)}">${esc(w)}</button><button class="fix" data-fix="${esc(w)}" title="${T("fixTerm")}" aria-label="${T("fixTerm")}"><svg viewBox="0 0 16 16"><path d="M3 13l1-3.5L10.5 3 13 5.5 6.5 12z"/></svg></button></span>`).join("") : "";
+  $("#vfound").innerHTML = !fresh.length ? "" : `<button class="fold ${foundOpen?"open":""}" data-fold>${T("foundTerms")} <span class="num">${fresh.length}</span><svg viewBox="0 0 16 16"><path d="M6 4l4 4-4 4"/></svg></button>` + (!foundOpen ? "" : fresh.map(w=>`<span class="fterm"><button class="term" data-v="${esc(w)}">${esc(w)}</button><button class="fix" data-fix="${esc(w)}" title="${T("fixTerm")}" aria-label="${T("fixTerm")}"><svg viewBox="0 0 16 16"><path d="M3 13l1-3.5L10.5 3 13 5.5 6.5 12z"/></svg></button></span>`).join(""));
   if(doc.terms || doc.status!=="done" || askedTerms.has(doc.id)) return;
   const id = doc.id; askedTerms.add(id);
   invoke("suggest_terms",{id}).then(t=>{ if(doc.id===id){ doc.terms=t; found(); } }).catch(()=>{});
@@ -339,21 +340,28 @@ function fixTerm(old, neu){
   if(!memory.vocab.some(w=>w.toLowerCase()===neu.toLowerCase())) memory.vocab.push(neu);
   localStorage.memory = JSON.stringify(memory); save(); turns(); found(); toast(T("termFixed",n));
 }
-$("#vfound").addEventListener("click",e=>{ const f=e.target.closest("[data-fix]"); if(f){ const w=f.dataset.fix;
+$("#vfound").addEventListener("click",e=>{ if(e.target.closest("[data-fold]")){ foundOpen=!foundOpen; found(); return; }
+  const f=e.target.closest("[data-fix]"); if(f){ const w=f.dataset.fix;
     f.parentElement.outerHTML = `<input class="termedit" value="${esc(w)}" data-old="${esc(w)}">`; const i=$(".termedit"); i.focus(); i.select(); return; }
   const b=e.target.closest("[data-v]"); if(b){ memory.vocab.push(b.dataset.v); localStorage.memory=JSON.stringify(memory); found(); toast(T("termAdded")); } });
 function share(){ const s=[]; doc.diar.forEach(([a,b,k])=>s[k]=(s[k]||0)+b-a); const tot=s.reduce((x,y)=>x+(y||0),0)||1; return s.map(v=>Math.round(100*(v||0)/tot)); }
 function nSpk(){ return Math.max(doc.speakers.length, ...doc.diar.map(d=>d[2]+1)); }
+let minorOpen = false;
 function tools(){
-  const sh = share();
-  $("#tools").innerHTML = Array.from({length:nSpk()},(_,i)=> editing===`spk${i}`
+  const sh = share(), all = Array.from({length:nSpk()},(_,i)=>i);
+  // ponytail: under 2% is mostly diarization splitting one voice; fold them unless there is just one
+  let minor = all.filter(i=>(sh[i]||0)<2 && !doc.speakers[i]?.name && editing!==`spk${i}`); if(minor.length<2) minor = [];
+  const shown = minorOpen ? all : all.filter(i=>!minor.includes(i));
+  $("#tools").innerHTML = shown.map(i=> editing===`spk${i}`
       ? `<input class="spkedit" data-spkin="${i}" value="${esc(nameOf(i))}">`
       : `<button class="spk ${hidden.has(i)?"off":""}" data-spk="${i}" title="Double-click to rename"><span class="dot" style="background:var(--sp${i%6})"></span>${esc(nameOf(i))}<small class="num">${sh[i]||0}%</small></button>`).join("")
-    + `<label class="field"><svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><input id="q" placeholder="${T("searchT")}" value="${esc(q)}"></label>`;
-  $("#q").oninput=e=>{ q=e.target.value; turns(); };
+    + (minor.length ? `<button class="spk more" data-minor>${minorOpen ? T("less") : `+${minor.length}`}</button>` : "")
+    ;
   const inp = $(".spkedit"); if(inp){ inp.focus(); inp.select(); }
 }
-$("#tools").addEventListener("click",e=>{ const s=e.target.closest("[data-spk]"); if(!s) return; const i=+s.dataset.spk; hidden.has(i)?hidden.delete(i):hidden.add(i); tools(); turns(); });
+$("#q").oninput=e=>{ q=e.target.value; turns(); };
+$("#tools").addEventListener("click",e=>{ if(e.target.closest("[data-minor]")){ minorOpen=!minorOpen; tools(); return; }
+  const s=e.target.closest("[data-spk]"); if(!s) return; const i=+s.dataset.spk; hidden.has(i)?hidden.delete(i):hidden.add(i); tools(); turns(); });
 $("#tools").addEventListener("dblclick",e=>{ const s=e.target.closest("[data-spk]"); if(!s) return; hidden.delete(+s.dataset.spk); editing=`spk${s.dataset.spk}`; tools(); });
 $("#tools").addEventListener("keydown",e=>{ const i=e.target.dataset.spkin; if(i===undefined) return; if(e.key==="Enter") e.target.blur(); if(e.key==="Escape"){ editing=null; tools(); } });
 $("#tools").addEventListener("focusout",e=>{ const i=e.target.dataset.spkin; if(i===undefined||editing===null) return; editing=null;

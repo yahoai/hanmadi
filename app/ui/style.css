@@ -136,23 +136,31 @@ td.d{color:var(--sub)}
 .aside{margin-top:24px;color:var(--sub);display:flex;gap:8px;align-items:center}
 
 /* transcript */
-.vhead{width:100%;max-width:784px;margin:0 auto;padding:32px 32px 0}
-.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px}
-.vrow > div{margin-right:auto;min-width:0}
-.vrow button,.seg button{white-space:nowrap}
-.vmeta{display:flex;align-items:center;flex-wrap:wrap;gap:2px 14px;color:var(--sub);margin-top:6px}
+/* wide: meeting info on the left, transcript + player on the right */
+#view.on{flex-direction:row}
+.vinfo{width:300px;flex:none;overflow:auto;border-right:1px solid var(--line);padding:32px 24px}
+.vinfo h1{font-size:20px;line-height:28px;word-break:keep-all}
+.vinfo .vt{align-items:flex-start}
+.vinfo #retitle span{display:none}
+.vmain{flex:1;min-width:0;display:flex;flex-direction:column}
+.vbar{width:100%;max-width:784px;margin:0 auto;padding:20px 32px 12px;display:flex;align-items:center;gap:0 4px;border-bottom:1px solid var(--line)}
+.vbar .seg{margin-left:auto}
+.vbar button,.seg button{white-space:nowrap}
+.vmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;color:var(--sub);margin-top:12px}
+.vinfo .vmeta > :not(#vdur):not(#vlangs){flex-basis:100%}
 .vmeta > span{white-space:nowrap}
 .vmeta > span:empty{display:none}
 .vmeta .marks{display:flex;gap:4px}
 .seg{display:flex;border-radius:7px;background:var(--hover);padding:2px;margin-right:6px}
 .seg button{height:28px;padding:0 12px;border-radius:5px;color:var(--sub);transition:.12s}
 .seg button.on{background:var(--paper);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,33,64,.06)}
-.tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:18px 0 14px;border-bottom:1px solid var(--line)}
+.tools{display:flex;flex-direction:column;align-items:stretch;gap:2px;margin:20px -10px 0;padding-top:16px;border-top:1px solid var(--line)}
+.tools .spk small{margin-left:auto}
 .spk{height:28px;padding:0 10px;border-radius:14px;display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-weight:500;transition:.12s}
 .spk:hover{background:var(--hover)}
 .spk small{font-weight:400;color:var(--sub);font-size:12px}
 .spk.off{opacity:.35}
-.tools .field{margin-left:auto}
+.qbox{flex:1;max-width:240px;margin-right:8px}
 .turns{max-width:784px;margin:0 auto;padding:20px 32px 64px}
 .turn{display:grid;grid-template-columns:64px 1fr;padding:14px 0;position:relative}
 .ts{align-self:start;text-align:left;height:22px;color:var(--muted);font-size:12px;transition:color .12s}
@@ -215,10 +223,15 @@ body[data-mode=tr] .tr{font-size:16px;line-height:28px;color:var(--text);border:
 .spkedit{height:28px;width:140px;border-radius:14px;border:1px solid var(--sp4);background:var(--field);padding:0 12px;outline:0;color:var(--ink);font-weight:500}
 button.term{cursor:pointer}
 button.term:hover{text-decoration:line-through;color:var(--sub)}
-.past{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;color:var(--sub)}
+.past{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:16px;color:var(--sub)}
 .past:empty{display:none}
 .past .term:hover{text-decoration:none;color:var(--ink);background:var(--line)}
 .found .term::before{content:"+";color:var(--sub)}
+.fold{display:inline-flex;align-items:center;gap:6px;height:24px;color:var(--sub)}
+.fold:hover{color:var(--ink)}
+.fold svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;transition:transform .12s}
+.fold.open svg{transform:rotate(90deg)}
+.spk.more{color:var(--sub);font-weight:400}
 .fterm{display:inline-flex;align-items:center;gap:1px}
 .fterm .fix{width:22px;height:24px;border-radius:5px;display:grid;place-items:center;color:var(--muted);opacity:0;transition:opacity .12s}
 .fterm:hover .fix,.fix:focus-visible{opacity:1}
@@ -244,7 +257,7 @@ button.term:hover{text-decoration:line-through;color:var(--sub)}
 .vt h1{outline:0;border-radius:6px;padding:0 4px;margin-left:-4px}
 .vt h1:hover,.vt h1:focus{background:var(--hover)}
 #retitle{opacity:0;transition:opacity .12s}
-.vhead:hover #retitle,#retitle:disabled,#retitle:focus-visible{opacity:1}
+.vinfo:hover #retitle,#retitle:disabled,#retitle:focus-visible{opacity:1}
 /* preview: listen before transcribing */
 .preview{display:flex;align-items:center;gap:12px;margin-top:14px;max-width:560px}
 .preview .play{width:32px;height:32px;flex:none}
@@ -274,3 +287,13 @@ button.term:hover{text-decoration:line-through;color:var(--sub)}
 .step.stop .ic{background:var(--hover);color:var(--muted)}
 .step.stop .ic svg{width:10px;height:10px;fill:currentColor;stroke:none}
 .pacts{margin-top:16px;display:flex;gap:8px}
+
+/* narrow window: back to one column, info on top */
+@media (max-width:1180px){
+  #view.on{flex-direction:column}
+  .vinfo{width:auto;max-width:784px;margin:0 auto;border-right:0;padding:24px 32px 0;overflow:visible;flex:none}
+  .vmeta{gap:2px 14px}
+  .vinfo .vmeta > *{flex-basis:auto !important}
+  .tools{flex-direction:row;flex-wrap:wrap;margin:12px 0 0;padding-top:0;border-top:0}
+  .tools .spk small{margin-left:0}
+}
