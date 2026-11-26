@@ -1,6 +1,6 @@
-# Verba
+# Hanmadi
 
-Desktop app that turns a meeting recording into a transcript with timestamps, speakers, per-line language and a translation under each line. Everything runs on your own machine, so audio never leaves it and you don't need an account.
+Hanmadi (한마디, "a word" in Korean) is a desktop app that turns a meeting recording into a transcript with timestamps, speakers, per-line language and a translation under each line. Everything runs on your own machine, so audio never leaves it and you don't need an account.
 
 Built for meetings where people switch between Korean, Chinese, English and Japanese mid-conversation.
 
@@ -75,11 +75,11 @@ cargo test        # pipeline unit tests
 
 For now the app reads engines and models from the source checkout, so a packaged build is not ready yet.
 
-Transcripts are saved to `~/Library/Application Support/kr.dodlab.verba/transcripts/<id>/`.
+Transcripts are saved to `~/Library/Application Support/io.github.yahoai.hanmadi/transcripts/<id>/`.
 
 ## Third-party licenses
 
-Verba is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). Homebrew's ffmpeg is built with GPL components. That is fine for local use, but if you redistribute a bundle with ffmpeg inside, use an LGPL build.
+Hanmadi is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). Homebrew's ffmpeg is built with GPL components. That is fine for local use, but if you redistribute a bundle with ffmpeg inside, use an LGPL build.
 
 ## License
 

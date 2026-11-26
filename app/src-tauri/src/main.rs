@@ -177,11 +177,11 @@ fn resume_job(app: AppHandle, id: String, fresh: bool, req: Option<pipeline::Job
     pipeline::resume(Some(app.clone()), &transcripts_dir(&app)?, &id, fresh, req)
 }
 
-/// Dev/batch entry: `verba --retranslate <id> [--to ko]`, `verba --retitle <id> [--lang ko]`, `verba --terms <id>`, `verba --resume <id> [--fresh]`, or `verba --transcribe <file> [--speakers "Mina:ko,zh;Wei:zh"] [--vocab "Nimbus,Orion"] [--to ko] [--title t]`
+/// Dev/batch entry: `hanmadi --retranslate <id> [--to ko]`, `hanmadi --retitle <id> [--lang ko]`, `hanmadi --terms <id>`, `hanmadi --resume <id> [--fresh]`, or `hanmadi --transcribe <file> [--speakers "Mina:ko,zh;Wei:zh"] [--vocab "Nimbus,Orion"] [--to ko] [--title t]`
 fn cli(args: &[String]) -> Option<Result<String, String>> {
     let opt = |k: &str| args.iter().position(|a| a == k).and_then(|i| args.get(i + 1)).cloned();
     // ponytail: macOS app-data path only; the GUI resolves it through Tauri
-    let dir = PathBuf::from(std::env::var("HOME").ok()?).join("Library/Application Support/kr.dodlab.verba/transcripts");
+    let dir = PathBuf::from(std::env::var("HOME").ok()?).join("Library/Application Support/io.github.yahoai.hanmadi/transcripts");
     if let Some(id) = opt("--retranslate") {
         let to = opt("--to").unwrap_or_else(|| "ko".into());
         return Some(pipeline::retranslate(&dir.join(&id), &to).map(|_| id));

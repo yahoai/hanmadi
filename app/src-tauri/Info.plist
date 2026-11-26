@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
   <key>NSMicrophoneUsageDescription</key>
-  <string>Verba records meetings on this computer to transcribe them. Audio never leaves it.</string>
+  <string>Hanmadi records meetings on this computer to transcribe them. Audio never leaves it.</string>
 </dict>
 </plist>

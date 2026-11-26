@@ -51,7 +51,7 @@ pub(super) fn cached<T: Serialize + DeserializeOwned>(path: &Path, make: impl Fn
 mod tests {
     #[test]
     fn cache_round_trip() {
-        let p = std::env::temp_dir().join(format!("verba-cache-{}.json", std::process::id()));
+        let p = std::env::temp_dir().join(format!("hanmadi-cache-{}.json", std::process::id()));
         let _ = std::fs::remove_file(&p);
         let made: Vec<(f64, f64, usize)> = super::cached(&p, || Ok(vec![(0.5, 2.25, 1)])).unwrap_or_default();
         let again: Vec<(f64, f64, usize)> = super::cached(&p, || Err("ran again".into())).unwrap_or_default();

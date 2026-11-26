@@ -71,7 +71,7 @@ pub fn preview(path: &str) -> Result<String, String> {
     use std::hash::{Hash, Hasher};
     let mut h = std::collections::hash_map::DefaultHasher::new();
     path.hash(&mut h);
-    let out = std::env::temp_dir().join(format!("verba-preview-{:x}.m4a", h.finish()));
+    let out = std::env::temp_dir().join(format!("hanmadi-preview-{:x}.m4a", h.finish()));
     exec(Command::new(ffmpeg()).args(["-v", "error", "-y", "-i", path, "-map", "0:a:0", "-c", "copy"]).arg(&out))?;
     Ok(out.to_string_lossy().into())
 }
