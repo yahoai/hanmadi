@@ -2,7 +2,7 @@
 
 Hanmadi (한마디, "a word" in Korean) is a desktop app that turns a meeting recording into a transcript with timestamps, speakers, per-line language and a translation under each line. Everything runs on your own machine, so audio never leaves it and you don't need an account.
 
-Built for meetings where people switch between Korean, Chinese, English and Japanese mid-conversation.
+Built for meetings where people switch between Korean, Chinese, English and Japanese mid-conversation. French, German and Spanish work too. The interface comes in English, Korean, Japanese, Simplified Chinese, French, German and Spanish.
 
 - Detects the language of each segment separately, so mixed-language meetings work
 - Names speakers from the participant list you give it ("Mina speaks ko and zh, Wei speaks zh")
@@ -10,7 +10,11 @@ Built for meetings where people switch between Korean, Chinese, English and Japa
 - Imports from a file or from macOS Voice Memos (iCloud)
 - A glossary of names and product terms is fed to both transcription and translation
 
-Status: early. Tested on macOS (Apple Silicon). Windows is planned but not tested yet.
+[![Hanmadi showing a meeting in Korean, Chinese, Japanese, English and French with English translations](docs/assets/screenshot.png)](docs/assets/demo.mp4)
+
+[Watch the 40-second demo](docs/assets/demo.mp4). The meeting in it is made up: `demo/make_demo.py` builds it with macOS voices, and `demo/video/record.mjs` records the video.
+
+Status: early. Tested on macOS (Apple Silicon). Windows is planned but not tested yet. This is a personal project: there's no support, but forks are welcome.
 
 ## How it works
 
@@ -79,7 +83,7 @@ Transcripts are saved to `~/Library/Application Support/io.github.yahoai.hanmadi
 
 ## Third-party licenses
 
-Hanmadi is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). Homebrew's ffmpeg is built with GPL components. That is fine for local use, but if you redistribute a bundle with ffmpeg inside, use an LGPL build.
+Hanmadi is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). The bundled IBM Plex fonts are under the SIL Open Font License (`app/ui/fonts/OFL.txt`). Homebrew's ffmpeg is built with GPL components. That is fine for local use, but if you redistribute a bundle with ffmpeg inside, use an LGPL build.
 
 ## License
 

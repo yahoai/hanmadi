@@ -18,7 +18,6 @@
     <button class="quiet" data-go="vocabs"><svg viewBox="0 0 16 16"><path d="M3 3.5h10M3 8h10M3 12.5h6"/></svg><span data-t="vocab"></span></button>
     <button class="quiet" data-go="settings"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M3.6 12.4l1.1-1.1M11.3 4.7l1.1-1.1"/></svg><span data-t="settings"></span></button>
     <div class="demo">
-      <div class="mini" id="uiLang"><button data-v="en">EN</button><button data-v="ko">한</button></div>
       <div class="mini" id="theme"><button data-v="light">☀︎</button><button data-v="dark">☾</button></div>
     </div>
   </div>
@@ -132,12 +131,17 @@
         <p class="help" data-t="youHelp"></p>
         <div class="person"><input id="myname" data-ph="name"><div class="langs" id="mylangs"></div></div>
       </div>
+      <div class="block">
+        <h2 data-t="language"></h2>
+        <select class="field langsel" id="uiLang"></select>
+      </div>
     </div></div>
   </section>
 </main>
 <div class="toast" id="toast"></div>
 <audio id="au" preload="auto"></audio>
 <audio id="pv" preload="metadata"></audio>
+<script src="i18n.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

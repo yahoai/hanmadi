@@ -1,3 +1,16 @@
+/* bundled IBM Plex (OFL, fonts/OFL.txt): same design across Latin, Korean, Chinese and Japanese */
+@font-face{font-family:"IBM Plex Sans";font-weight:400;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans KR";font-weight:400;src:url(fonts/IBMPlexSansKR-Regular.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans KR";font-weight:500;src:url(fonts/IBMPlexSansKR-Medium.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans KR";font-weight:600;src:url(fonts/IBMPlexSansKR-SemiBold.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans SC";font-weight:400;src:url(fonts/IBMPlexSansSC-Regular.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans SC";font-weight:500;src:url(fonts/IBMPlexSansSC-Medium.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans SC";font-weight:600;src:url(fonts/IBMPlexSansSC-SemiBold.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans JP";font-weight:400;src:url(fonts/IBMPlexSansJP-Regular.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans JP";font-weight:500;src:url(fonts/IBMPlexSansJP-Medium.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans JP";font-weight:600;src:url(fonts/IBMPlexSansJP-SemiBold.woff2) format("woff2")}
 :root{
   --paper:#FFFFFF;--rail:#F3F4F6;--ink:#002140;--text:#2E3A4B;--sub:#62738C;--muted:#9AA5B3;--line:#E6E8EC;--hover:#ECEEF1;--field:#FFFFFF;
   --now:#FA6855;--now-soft:rgba(250,104,85,.08);
@@ -56,6 +69,7 @@ svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke
 .railfoot{border-top:1px solid var(--line);padding:8px}
 .railfoot .quiet{width:100%}
 .demo{display:flex;gap:6px;padding:6px 4px 2px}
+.langsel{width:220px;color:var(--ink);outline:0}
 .mini{flex:1;display:flex;border-radius:7px;background:var(--hover);padding:2px}
 .mini button{flex:1;height:24px;border-radius:5px;font-size:12px;color:var(--sub)}
 .mini button.on{background:var(--paper);color:var(--ink);box-shadow:0 0 0 1px var(--line)}

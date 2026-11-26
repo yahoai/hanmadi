@@ -22,3 +22,7 @@ __pycache__/
 .claude/
 .workflow/
 CLAUDE.md
+
+# Launch posts (drafts, not for the public repo)
+marketing/
+demo/video/out/

@@ -60,6 +60,9 @@ pub fn language_name(code: &str) -> &str {
         "en" => "English",
         "zh" => "Simplified Chinese",
         "ja" => "Japanese",
+        "fr" => "French",
+        "de" => "German",
+        "es" => "Spanish",
         other => other,
     }
 }

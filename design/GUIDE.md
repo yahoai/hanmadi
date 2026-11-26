@@ -55,7 +55,7 @@
 
 ## 5. 글꼴
 
-- **IBM Plex Sans** 계열 하나로 통일한다: Plex Sans(라틴), Plex Sans KR, Plex Sans SC/TC, Plex Sans JP. 모두 OFL 라이선스라 앱에 같이 넣는다
+- **IBM Plex Sans** 계열 하나로 통일한다: Plex Sans(라틴), Plex Sans KR, Plex Sans SC/TC, Plex Sans JP. 모두 OFL 라이선스라 앱에 같이 넣는다 (`app/ui/fonts`, 400/500/600 woff2). TC는 아직 안 넣었다
 - 고른 이유: 한 회의 안에 한국어, 중국어, 영어, 일본어가 섞여 나온다. 언어마다 글꼴이 달라지면 문단이 얼룩져 보인다. Plex는 네 언어를 같은 설계로 갖춘 몇 안 되는 가족이고, 기술 문서에서 온 단정한 인상이 "정확한 기록"이라는 제품 성격과 맞는다
 - 본문 요소에는 `lang` 속성을 붙여서 중국어 줄은 SC, 일본어 줄은 JP 글꼴로 렌더링한다 (한자 모양이 언어마다 다르기 때문)
 - 숫자(시간, 길이)는 `tabular-nums`로 자릿수를 맞춘다

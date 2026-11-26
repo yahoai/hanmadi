@@ -1,61 +1,7 @@
 const { invoke, convertFileSrc } = window.__TAURI__.core;
 const { listen } = window.__TAURI__.event;
 
-const I18N = {
-  en:{search:"Search",new:"New transcript",gProg:"In progress",gWeek:"This week",gEarlier:"Earlier",vocab:"Vocabulary",settings:"Settings",
-    newTitle:"New transcript",lede:"Drop in a meeting recording. You get who said what and when, in every language spoken, with a translation alongside.",
-    dropTitle:"Drop a recording here",formats:"m4a, mp3, wav, mp4 and Voice Memos recordings",choose:"Choose a file",fromMemos:"From Voice Memos",searchRec:"Search recordings",
-    noMemos:"No Voice Memos found. On a Mac, allow Full Disk Access for this app in System Settings to see them.",
-    back:"Back",fromMemo:"From Voice Memos",fromFile:"From a file",
-    speakers:"Speakers",speakersHelp:"Add each person and the languages they speak, and we'll match voices to names. Leave this empty to get Speaker 1, Speaker 2 and so on.",
-    addSpeaker:"Add speaker",name:"Name",vocabHelp:"Names, products and jargon from this meeting. They improve spelling and stay for your next meeting.",addWord:"Add a word",
-    translation:"Translation",trHelp:"Lines spoken in other languages get a translation underneath.",trOff:"Don't translate",trInto:"Translate into",
-    local:"Processed on this computer. The audio never leaves it.",eta:(a,b)=>b?`Transcription about ${a}, translation about ${b}`:`Transcription about ${a}`,cancel:"Cancel",transcribe:"Transcribe",
-    phTrans:"Transcription",phTransl:"Translation",elapsed:x=>`${x} elapsed`,leftAbout:x=>`about ${x} left`,almost:"almost done",expected:x=>`about ${x}`,tookIn:x=>`took ${x}`,waiting:"Waiting",queuedNote:"Starts when the transcript before it finishes.",
-    mins:m=>m<1?"under a minute":`${m} min`,dur:(m,x)=>m?`${m}m ${x}s`:`${x}s`,closeNote:"You can close this window. We'll notify you when it's done.",
-    mOrig:"Original",mBoth:"Both",mTr:"Translation",copy:"Copy",export:"Export",trNote:l=>`Translation in ${l}`,searchT:"Search transcript",
-    change:"Change speaker",edit:"Edit",copied:"Transcript copied",exported:p=>`Exported to ${p}`,speakerN:"Speaker",empty:"Nothing here yet. Start with a new transcript.",
-    steps:{prepare:"Preparing audio",vad:"Finding speech",diarize:"Telling voices apart",transcribe:"Writing it down",translate:"Translating",name:"Matching names",title:"Naming the meeting"},running:"In progress",queued:"Queued",transcribed:"Transcribed",recordedOn:"Recorded",addedOn:"Added",autoTitle:"Suggest a title",titling:"Writing a title",
-    autoTitleHelp:"Leave the name as it is and we'll title the meeting from what was said once it's transcribed.",
-    openT:"Open",del:"Delete",delTitle:"Delete transcript",delAsk:t=>`Delete "${t}"? The transcript and its playback audio will be removed. The original recording stays where it is.`,delBusy:"This transcript is still being processed. Delete it once it finishes.",deleted:"Deleted",
-    pastPeople:"Past participants",recommended:"Recommended",
-    vocabsHelp:"Names, products and jargon your meetings use. Every new transcript starts with these words so they get spelled right.",
-    you:"You",youHelp:"Your name is added to every new transcript as a participant, so we know which voice is you.",
-    listen:"Listen",pastTerms:"From past meetings",
-    foundTerms:"Found in this meeting",less:"Show less",termAdded:"Added to vocabulary",
-    fixTerm:"Fix spelling",termFixed:n=>n?`Fixed ${n} ${n===1?"place":"places"} and added to vocabulary`:"Added to vocabulary",
-    vocabMore:(n,m)=>`Using the ${m} most recent of your ${n} words. Pick more from past meetings below.`,vocabOver:m=>`Only the last ${m} words are used when transcribing.`,
-    record:"Record",recording:"Recording",fromRec:"Recorded here",recTitle:d=>`Meeting ${d}`,recStop:"Stop and transcribe",recSound:"Sound coming in",recQuiet:"Quiet",
-    recSilence:"Stopped after 5 minutes of silence",recSlept:"Stopped when the computer went to sleep",recSaved:p=>`Recording saved to ${p}`,recFailed:"The recording stopped unexpectedly",
-    stopped:"Stopped",failed:"Failed",stoppedNote:"This transcript stopped before it finished.",resume:"Resume",startOver:"Start over"},
-  ko:{search:"검색",new:"새 전사",gProg:"진행 중",gWeek:"이번 주",gEarlier:"이전",vocab:"용어집",settings:"설정",
-    newTitle:"새 전사",lede:"회의 녹음을 넣으면 누가 언제 무슨 말을 했는지 어떤 언어든 그대로 받아 적고, 옆에 번역을 붙입니다.",
-    dropTitle:"녹음 파일을 여기에 놓으세요",formats:"m4a, mp3, wav, mp4, 음성 메모 녹음",choose:"파일 선택",fromMemos:"음성 메모에서 가져오기",searchRec:"녹음 검색",
-    noMemos:"음성 메모를 찾지 못했습니다. 맥의 시스템 설정에서 이 앱에 전체 디스크 접근 권한을 주면 보입니다.",
-    back:"뒤로",fromMemo:"음성 메모",fromFile:"파일",
-    speakers:"참석자",speakersHelp:"참석자와 각자 쓰는 언어를 적으면 목소리에 이름을 붙입니다. 비워 두면 화자 1, 화자 2처럼 나옵니다.",
-    addSpeaker:"참석자 추가",name:"이름",vocabHelp:"회의에 나오는 회사, 제품, 사람 이름과 전문 용어. 철자가 정확해지고 다음 회의에도 남습니다.",addWord:"단어 추가",
-    translation:"번역",trHelp:"다른 언어로 말한 줄 아래에 번역을 붙입니다.",trOff:"번역 안 함",trInto:"번역할 언어",
-    local:"이 컴퓨터 안에서만 처리합니다. 녹음은 밖으로 나가지 않습니다.",eta:(a,b)=>b?`전사 약 ${a}, 번역 약 ${b}`:`전사 약 ${a}`,cancel:"취소",transcribe:"전사 시작",
-    phTrans:"전사",phTransl:"번역",elapsed:x=>`${x} 경과`,leftAbout:x=>`약 ${x} 남음`,almost:"거의 끝남",expected:x=>`약 ${x} 예상`,tookIn:x=>`${x} 걸림`,waiting:"대기",queuedNote:"앞의 전사가 끝나면 시작합니다.",
-    mins:m=>m<1?"1분 미만":`${m}분`,dur:(m,x)=>m?`${m}분 ${x}초`:`${x}초`,closeNote:"창을 닫아도 계속됩니다. 끝나면 알림으로 알려 드립니다.",
-    mOrig:"원문",mBoth:"함께",mTr:"번역",copy:"복사",export:"내보내기",trNote:l=>`${l} 번역 포함`,searchT:"전사문 검색",
-    change:"화자 변경",edit:"수정",copied:"전사문을 복사했습니다",exported:p=>`${p}에 저장했습니다`,speakerN:"화자",empty:"아직 전사가 없습니다. 새 전사로 시작하세요.",
-    steps:{prepare:"녹음 준비",vad:"말소리 찾기",diarize:"목소리 구분",transcribe:"받아쓰기",translate:"번역",name:"이름 붙이기",title:"제목 붙이기"},running:"진행 중",queued:"대기 중",transcribed:"전사 완료",recordedOn:"녹음",addedOn:"추가",autoTitle:"제목 자동 생성",titling:"제목 만드는 중",
-    autoTitleHelp:"이름을 그대로 두면 전사가 끝난 뒤 회의 내용을 보고 제목을 붙입니다.",
-    openT:"열기",del:"삭제",delTitle:"전사 삭제",delAsk:t=>`"${t}" 전사를 삭제할까요? 전사문과 재생용 음성이 지워집니다. 원본 녹음은 그대로 남습니다.`,delBusy:"아직 처리 중인 전사입니다. 끝난 뒤에 삭제하세요.",deleted:"삭제했습니다",
-    pastPeople:"지난 참석자",recommended:"추천",
-    vocabsHelp:"회의에 자주 나오는 회사, 제품, 사람 이름과 전문 용어. 새 전사마다 이 단어들로 시작해서 철자가 정확해집니다.",
-    you:"나",youHelp:"내 이름은 새 전사마다 참석자로 들어갑니다. 그래야 어느 목소리가 나인지 압니다.",
-    listen:"미리 듣기",pastTerms:"지난 회의 용어",
-    foundTerms:"이 회의에서 찾은 용어",less:"접기",termAdded:"용어집에 추가했습니다",
-    fixTerm:"철자 고치기",termFixed:n=>n?`${n}곳을 고치고 용어집에 추가했습니다`:"용어집에 추가했습니다",
-    vocabMore:(n,m)=>`용어집 ${n}개 중 최근 ${m}개를 넣었습니다. 아래 지난 회의 용어에서 더 고를 수 있습니다.`,vocabOver:m=>`전사에는 마지막 ${m}개만 쓰입니다.`,
-    record:"녹음",recording:"녹음 중",fromRec:"이 컴퓨터에서 녹음",recTitle:d=>`회의 ${d}`,recStop:"종료하고 전사",recSound:"소리가 들어오는 중",recQuiet:"조용함",
-    recSilence:"5분 동안 소리가 없어 녹음을 끝냈습니다",recSlept:"컴퓨터가 잠자기에 들어가 녹음을 끝냈습니다",recSaved:p=>`녹음을 ${p}에 저장했습니다`,recFailed:"녹음이 예기치 않게 멈췄습니다",
-    stopped:"멈춤",failed:"실패",stoppedNote:"끝나기 전에 멈췄습니다.",resume:"이어하기",startOver:"처음부터 다시"}
-};
-const GLYPH = {ko:"한",zh:"中",en:"EN",ja:"日"};
+const GLYPH = {ko:"한",zh:"中",en:"EN",ja:"日",fr:"FR",de:"DE",es:"ES"};
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt = s => { s=Math.max(0,s); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=Math.floor(s%60); return (h?`${h}:${String(m).padStart(2,"0")}`:String(m).padStart(2,"0"))+":"+String(x).padStart(2,"0"); };
@@ -64,10 +10,10 @@ const dur = s => T("dur", Math.floor(s/60), Math.round(s%60));
 const dfmt = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
 const ICON = {play:'<svg viewBox="0 0 16 16"><path d="M5 3.2v9.6L12.8 8z"/></svg>',pause:'<svg viewBox="0 0 16 16"><path d="M4.5 3h2.4v10H4.5zM9.1 3h2.4v10H9.1z"/></svg>',check:'<svg viewBox="0 0 16 16"><path d="M3.5 8.5 6.5 11.5 12.5 4.5"/></svg>',trash:'<svg viewBox="0 0 16 16"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5"/></svg>'};
 
-let L = localStorage.lang || "en";
-const T = (k,...a) => { const v=I18N[L][k]; return typeof v==="function" ? v(...a) : v; };
+let L = I18N[localStorage.lang] ? localStorage.lang : "en";
+const T = (k,...a) => { const v=I18N[L][k] ?? I18N.en[k]; return typeof v==="function" ? v(...a) : v; };
 const langName = c => new Intl.DisplayNames([L],{type:"language"}).of(c);
-const dateFmt = (d,opt) => new Intl.DateTimeFormat(L==="ko"?"ko-KR":"en-US",opt).format(d);
+const dateFmt = (d,opt) => new Intl.DateTimeFormat(L,opt).format(d);
 function toast(m){ const e=$("#toast"); e.textContent=m; e.classList.add("on"); clearTimeout(toast.h); toast.h=setTimeout(()=>e.classList.remove("on"),2400); }
 
 /* ---------- navigation + list ---------- */
@@ -187,7 +133,7 @@ $("#pvseek").oninput = async e=>{ const v = +e.target.value; if(pvPath!==draft.s
 let memory = JSON.parse(localStorage.memory || '{"vocab":[],"speakers":[]}');
 // recommended target: the app language. Lines already in it are never translated, so this costs nothing
 // when nobody speaks another language (participants' language hints are often incomplete)
-const recTr = ()=>L==="ko"?"ko":"en";
+const recTr = ()=>GLYPH[L] ? L : "en";
 // whisper's prompt holds about 224 tokens and drops the front when longer; more words also invite hallucinated vocabulary
 const VOCAB_MAX = 40;
 function startDraft(src){
@@ -212,7 +158,7 @@ function renderSetup(){
   $("#vnote").textContent = draft.vocab.length>VOCAB_MAX ? T("vocabOver",VOCAB_MAX) : memory.vocab.length>VOCAB_MAX ? T("vocabMore",memory.vocab.length,VOCAB_MAX) : "";
   const rec = recTr();
   if(!draft.trPicked) draft.translateTo = rec || null;
-  $("#trsel").innerHTML = [rec, ...["ko","en","zh","ja",""].filter(c=>c!==rec)].map(c=>`<option value="${c}" ${c===(draft.translateTo||"")?"selected":""}>${c?`${T("trInto")}: ${langName(c)}`:T("trOff")}${c===rec?` (${T("recommended")})`:""}</option>`).join("");
+  $("#trsel").innerHTML = [rec, ...[...Object.keys(GLYPH),""].filter(c=>c!==rec)].map(c=>`<option value="${c}" ${c===(draft.translateTo||"")?"selected":""}>${c?`${T("trInto")}: ${langName(c)}`:T("trOff")}${c===rec?` (${T("recommended")})`:""}</option>`).join("");
   $("#eta").textContent = "";
   if(s.duration) invoke("estimate",{duration:s.duration, translate:!!draft.translateTo})
     .then(e=>$("#eta").textContent = T("eta", mins(e.transcribe), draft.translateTo ? mins(e.translate) : null));
@@ -450,7 +396,8 @@ $("#export").onclick=()=>exportMd(doc.id);
 function mini(id,val,fn){ const el=$(id); el.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===val)); el.onclick=e=>{ const b=e.target.closest("button"); if(b){ fn(b.dataset.v); mini(id,b.dataset.v,fn); } }; }
 const theme = localStorage.theme || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
 document.documentElement.dataset.theme = theme;
-mini("#uiLang",L,v=>{ L=localStorage.lang=v; texts(); });
+$("#uiLang").innerHTML = UI_LANGS.map(([c,n])=>`<option value="${c}">${n}</option>`).join(""); $("#uiLang").value = L;
+$("#uiLang").onchange = e=>{ L=localStorage.lang=e.target.value; texts(); };
 mini("#theme",theme,v=>{ document.documentElement.dataset.theme=localStorage.theme=v; });
 $("#play").innerHTML = ICON.play;
 window.addEventListener("focus", loadList);
