@@ -1,0 +1,24 @@
+# Engine sources and builds (whisper.cpp, sherpa-onnx, llama.cpp): rebuilt from upstream, never edited
+tools/
+dl/
+# Models (about 3 GB)
+models/
+# Working files from prototype runs (contain real meeting audio and transcripts)
+work/
+# The mockup embeds real meeting audio and transcript text
+design/mockup.html
+
+# Rust / Tauri
+app/src-tauri/target/
+app/src-tauri/gen/schemas/
+
+# Misc
+.DS_Store
+__pycache__/
+*.pyc
+.claude/settings.local.json
+
+# Local dev tooling (Claude Code, Moolle workflow)
+.claude/
+.workflow/
+CLAUDE.md

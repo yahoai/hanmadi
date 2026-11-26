@@ -1,0 +1,14 @@
+{
+  "identifier": "default",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-start-dragging",
+    "dialog:allow-open",
+    "dialog:allow-ask",
+    "notification:default",
+    "window-state:default"
+  ]
+}

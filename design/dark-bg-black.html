@@ -1,0 +1,370 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>다크 모드 배경: 블랙 바리에이션</title><style>
+body{margin:0;font:14px/1.5 -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;background:#F4F5F7;color:#1D2430}
+header{padding:28px 32px 8px} h1{margin:0;font-size:22px} header p{margin:6px 0 0;color:#5B6676}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding:20px 32px 48px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px #E3E6EA;cursor:pointer;transition:box-shadow .12s}
+.card:hover{box-shadow:0 0 0 2px #1D2430} .card.pick{box-shadow:0 0 0 3px #FA6855}
+.chip{height:64px;display:flex;align-items:flex-end;justify-content:space-between;padding:8px 10px;font-weight:700;font-size:15px}
+.meta{padding:8px 10px 10px;display:flex;justify-content:space-between;gap:6px;font-size:12px;color:#5B6676}
+.meta b{color:#1D2430;font-size:13px} .meta code{font:12px ui-monospace,Menlo,monospace;color:#1D2430}
+.cr{font-size:11px;color:#8A94A3;padding:0 10px 8px}
+.ui{display:flex;height:150px;border-top:1px solid;font-size:11px}
+.rail{width:30%;border-right:1px solid;padding:8px 6px;display:flex;flex-direction:column;gap:6px} .rail i{display:block;height:7px;border-radius:3px}
+.body{flex:1;padding:8px 10px;display:flex;flex-direction:column;gap:3px;min-width:0} .body b{font-size:12px}
+.body p{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .d{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px}
+.body em{font-style:normal;font-size:9px;border:1px solid;border-radius:3px;padding:0 3px}
+.btn{align-self:flex-start;display:inline-block;border-radius:6px;padding:3px 9px;font-weight:600;font-size:11px;margin-top:auto}
+.pair{display:grid;grid-template-columns:1fr 1fr} .pair > *{margin:0;padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.badge{border-radius:9px;padding:0 7px;font-size:11px;font-weight:600} .bar{display:block;width:100%;height:3px;border-radius:2px}
+.cur{outline:2px dashed #8A94A3;outline-offset:-6px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1D2430;color:#fff;padding:8px 14px;border-radius:8px;opacity:0;transition:.2s}
+#toast.on{opacity:1}
+</style></head><body>
+<header><h1>다크 모드 배경: 블랙 바리에이션</h1><p>다크 모드 배경 후보입니다. 아래 미리보기는 이 배경에서 사이드바, 선, 글자색을 자동으로 맞춘 모습입니다. 카드를 누르면 번호와 색 코드가 복사됩니다. 마음에 드는 번호를 알려 주세요.</p></header>
+<div class="grid"><div class="card cur" data-id="current" data-hex="#0F1924">
+<div class="chip" style="background:#0F1924;color:#FFFFFF"><span>current</span></div>
+<div class="meta"><b>현재</b><code>#0F1924</code></div>
+<div class="cr">흰 글자 대비 17.7 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#0F1924;color:#CCD2D8;border-color:#202B37">
+  <div class="rail" style="background:#0A131E;border-color:#202B37"><i style="background:#18222E"></i><i style="background:#18222E;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EEF2F7">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EEF2F7">Mina</span> <em style="border-color:#202B37;color:#9399A0">中</em></p>
+    <p style="color:#CCD2D8">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9399A0;border-left:2px solid #202B37;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#646A70">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EEF2F7;color:#0F1924">Export</span></div></div></div><div class="card" data-id="B01" data-hex="#090909">
+<div class="chip" style="background:#090909;color:#FFFFFF"><span>B01</span></div>
+<div class="meta"><b>Neutral 14</b><code>#090909</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#090909;color:#D1D1D1;border-color:#191919">
+  <div class="rail" style="background:#050505;border-color:#191919"><i style="background:#111111"></i><i style="background:#111111;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F2F2">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F2F2">Mina</span> <em style="border-color:#191919;color:#989898">中</em></p>
+    <p style="color:#D1D1D1">我们要的你的API情报是有什么样的</p>
+    <p style="color:#989898;border-left:2px solid #191919;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#696969">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F2F2;color:#090909">Export</span></div></div></div><div class="card" data-id="B02" data-hex="#0F0F0F">
+<div class="chip" style="background:#0F0F0F;color:#FFFFFF"><span>B02</span></div>
+<div class="meta"><b>Neutral 17</b><code>#0F0F0F</code></div>
+<div class="cr">흰 글자 대비 19.2 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0F0F0F;color:#D1D1D1;border-color:#202020">
+  <div class="rail" style="background:#0A0A0A;border-color:#202020"><i style="background:#181818"></i><i style="background:#181818;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F2F2">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F2F2">Mina</span> <em style="border-color:#202020;color:#989898">中</em></p>
+    <p style="color:#D1D1D1">我们要的你的API情报是有什么样的</p>
+    <p style="color:#989898;border-left:2px solid #202020;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#696969">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F2F2;color:#0F0F0F">Export</span></div></div></div><div class="card" data-id="B03" data-hex="#161616">
+<div class="chip" style="background:#161616;color:#FFFFFF"><span>B03</span></div>
+<div class="meta"><b>Neutral 20</b><code>#161616</code></div>
+<div class="cr">흰 글자 대비 18.1 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#161616;color:#D1D1D1;border-color:#282828">
+  <div class="rail" style="background:#101010;border-color:#282828"><i style="background:#1F1F1F"></i><i style="background:#1F1F1F;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F2F2">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F2F2">Mina</span> <em style="border-color:#282828;color:#989898">中</em></p>
+    <p style="color:#D1D1D1">我们要的你的API情报是有什么样的</p>
+    <p style="color:#989898;border-left:2px solid #282828;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#696969">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F2F2;color:#161616">Export</span></div></div></div><div class="card" data-id="B04" data-hex="#1D1D1D">
+<div class="chip" style="background:#1D1D1D;color:#FFFFFF"><span>B04</span></div>
+<div class="meta"><b>Neutral 23</b><code>#1D1D1D</code></div>
+<div class="cr">흰 글자 대비 16.9 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#1D1D1D;color:#D1D1D1;border-color:#2F2F2F">
+  <div class="rail" style="background:#171717;border-color:#2F2F2F"><i style="background:#272727"></i><i style="background:#272727;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F2F2">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F2F2">Mina</span> <em style="border-color:#2F2F2F;color:#989898">中</em></p>
+    <p style="color:#D1D1D1">我们要的你的API情报是有什么样的</p>
+    <p style="color:#989898;border-left:2px solid #2F2F2F;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#696969">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F2F2;color:#1D1D1D">Export</span></div></div></div><div class="card" data-id="B05" data-hex="#242424">
+<div class="chip" style="background:#242424;color:#FFFFFF"><span>B05</span></div>
+<div class="meta"><b>Neutral 26</b><code>#242424</code></div>
+<div class="cr">흰 글자 대비 15.5 · 검정 글자 대비 1.4</div>
+<div class="ui" style="background:#242424;color:#D1D1D1;border-color:#373737">
+  <div class="rail" style="background:#1E1E1E;border-color:#373737"><i style="background:#2E2E2E"></i><i style="background:#2E2E2E;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F2F2">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F2F2">Mina</span> <em style="border-color:#373737;color:#989898">中</em></p>
+    <p style="color:#D1D1D1">我们要的你的API情报是有什么样的</p>
+    <p style="color:#989898;border-left:2px solid #373737;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#696969">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F2F2;color:#242424">Export</span></div></div></div><div class="card" data-id="B06" data-hex="#060A0E">
+<div class="chip" style="background:#060A0E;color:#FFFFFF"><span>B06</span></div>
+<div class="meta"><b>Cool 14</b><code>#060A0E</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#060A0E;color:#CED1D4;border-color:#151B1F">
+  <div class="rail" style="background:#030609;border-color:#151B1F"><i style="background:#0E1317"></i><i style="background:#0E1317;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F4">Mina</span> <em style="border-color:#151B1F;color:#95999C">中</em></p>
+    <p style="color:#CED1D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95999C;border-left:2px solid #151B1F;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F4;color:#060A0E">Export</span></div></div></div><div class="card" data-id="B07" data-hex="#0B1015">
+<div class="chip" style="background:#0B1015;color:#FFFFFF"><span>B07</span></div>
+<div class="meta"><b>Cool 17</b><code>#0B1015</code></div>
+<div class="cr">흰 글자 대비 19.1 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0B1015;color:#CED1D4;border-color:#1C2127">
+  <div class="rail" style="background:#060B0F;border-color:#1C2127"><i style="background:#14191E"></i><i style="background:#14191E;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F4">Mina</span> <em style="border-color:#1C2127;color:#95999C">中</em></p>
+    <p style="color:#CED1D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95999C;border-left:2px solid #1C2127;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696D">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F4;color:#0B1015">Export</span></div></div></div><div class="card" data-id="B08" data-hex="#12171C">
+<div class="chip" style="background:#12171C;color:#FFFFFF"><span>B08</span></div>
+<div class="meta"><b>Cool 20</b><code>#12171C</code></div>
+<div class="cr">흰 글자 대비 18.0 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#12171C;color:#CED1D4;border-color:#23292E">
+  <div class="rail" style="background:#0D1116;border-color:#23292E"><i style="background:#1B2026"></i><i style="background:#1B2026;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F4">Mina</span> <em style="border-color:#23292E;color:#95999C">中</em></p>
+    <p style="color:#CED1D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95999C;border-left:2px solid #23292E;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F4;color:#12171C">Export</span></div></div></div><div class="card" data-id="B09" data-hex="#181D23">
+<div class="chip" style="background:#181D23;color:#FFFFFF"><span>B09</span></div>
+<div class="meta"><b>Cool 23</b><code>#181D23</code></div>
+<div class="cr">흰 글자 대비 17.0 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#181D23;color:#CED1D5;border-color:#2A2F36">
+  <div class="rail" style="background:#12171D;border-color:#2A2F36"><i style="background:#21272D"></i><i style="background:#21272D;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F5">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F5">Mina</span> <em style="border-color:#2A2F36;color:#95999D">中</em></p>
+    <p style="color:#CED1D5">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95999D;border-left:2px solid #2A2F36;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696D">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F5;color:#181D23">Export</span></div></div></div><div class="card" data-id="B10" data-hex="#1F252A">
+<div class="chip" style="background:#1F252A;color:#FFFFFF"><span>B10</span></div>
+<div class="meta"><b>Cool 26</b><code>#1F252A</code></div>
+<div class="cr">흰 글자 대비 15.5 · 검정 글자 대비 1.4</div>
+<div class="ui" style="background:#1F252A;color:#CED1D4;border-color:#31383D">
+  <div class="rail" style="background:#191F24;border-color:#31383D"><i style="background:#292F34"></i><i style="background:#292F34;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F4">Mina</span> <em style="border-color:#31383D;color:#95999C">中</em></p>
+    <p style="color:#CED1D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95999C;border-left:2px solid #31383D;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F4;color:#1F252A">Export</span></div></div></div><div class="card" data-id="B11" data-hex="#050912">
+<div class="chip" style="background:#050912;color:#FFFFFF"><span>B11</span></div>
+<div class="meta"><b>Blue 14</b><code>#050912</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#050912;color:#CED1D7;border-color:#141A24">
+  <div class="rail" style="background:#02050C;border-color:#141A24"><i style="background:#0C121B"></i><i style="background:#0C121B;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF2F6">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF2F6">Mina</span> <em style="border-color:#141A24;color:#95989F">中</em></p>
+    <p style="color:#CED1D7">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95989F;border-left:2px solid #141A24;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#65696F">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF2F6;color:#050912">Export</span></div></div></div><div class="card" data-id="B12" data-hex="#0A0F19">
+<div class="chip" style="background:#0A0F19;color:#FFFFFF"><span>B12</span></div>
+<div class="meta"><b>Blue 17</b><code>#0A0F19</code></div>
+<div class="cr">흰 글자 대비 19.2 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0A0F19;color:#CED1D7;border-color:#1B202B">
+  <div class="rail" style="background:#060A13;border-color:#1B202B"><i style="background:#131822"></i><i style="background:#131822;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF2F6">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF2F6">Mina</span> <em style="border-color:#1B202B;color:#95989F">中</em></p>
+    <p style="color:#CED1D7">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95989F;border-left:2px solid #1B202B;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#666970">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF2F6;color:#0A0F19">Export</span></div></div></div><div class="card" data-id="B13" data-hex="#111620">
+<div class="chip" style="background:#111620;color:#FFFFFF"><span>B13</span></div>
+<div class="meta"><b>Blue 20</b><code>#111620</code></div>
+<div class="cr">흰 글자 대비 18.1 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#111620;color:#CED1D7;border-color:#222833">
+  <div class="rail" style="background:#0C101A;border-color:#222833"><i style="background:#1A1F2A"></i><i style="background:#1A1F2A;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF2F6">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF2F6">Mina</span> <em style="border-color:#222833;color:#95989F">中</em></p>
+    <p style="color:#CED1D7">我们要的你的API情报是有什么样的</p>
+    <p style="color:#95989F;border-left:2px solid #222833;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#66696F">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF2F6;color:#111620">Export</span></div></div></div><div class="card" data-id="B14" data-hex="#171D27">
+<div class="chip" style="background:#171D27;color:#FFFFFF"><span>B14</span></div>
+<div class="meta"><b>Blue 23</b><code>#171D27</code></div>
+<div class="cr">흰 글자 대비 16.9 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#171D27;color:#CED1D7;border-color:#292F3A">
+  <div class="rail" style="background:#111721;border-color:#292F3A"><i style="background:#202731"></i><i style="background:#202731;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF2F6">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF2F6">Mina</span> <em style="border-color:#292F3A;color:#94989F">中</em></p>
+    <p style="color:#CED1D7">我们要的你的API情报是有什么样的</p>
+    <p style="color:#94989F;border-left:2px solid #292F3A;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#65696F">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF2F6;color:#171D27">Export</span></div></div></div><div class="card" data-id="B15" data-hex="#1E242F">
+<div class="chip" style="background:#1E242F;color:#FFFFFF"><span>B15</span></div>
+<div class="meta"><b>Blue 26</b><code>#1E242F</code></div>
+<div class="cr">흰 글자 대비 15.6 · 검정 글자 대비 1.3</div>
+<div class="ui" style="background:#1E242F;color:#CED1D7;border-color:#303742">
+  <div class="rail" style="background:#181E29;border-color:#303742"><i style="background:#282E39"></i><i style="background:#282E39;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF2F6">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF2F6">Mina</span> <em style="border-color:#303742;color:#94989F">中</em></p>
+    <p style="color:#CED1D7">我们要的你的API情报是有什么样的</p>
+    <p style="color:#94989F;border-left:2px solid #303742;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#656970">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF2F6;color:#1E242F">Export</span></div></div></div><div class="card" data-id="B16" data-hex="#0D0804">
+<div class="chip" style="background:#0D0804;color:#FFFFFF"><span>B16</span></div>
+<div class="meta"><b>Warm 14</b><code>#0D0804</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0D0804;color:#D4D0CD;border-color:#1E1812">
+  <div class="rail" style="background:#080402;border-color:#1E1812"><i style="background:#16100B"></i><i style="background:#16100B;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F4F1EF">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F4F1EF">Mina</span> <em style="border-color:#1E1812;color:#9B9794">中</em></p>
+    <p style="color:#D4D0CD">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9B9794;border-left:2px solid #1E1812;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#6C6865">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F4F1EF;color:#0D0804">Export</span></div></div></div><div class="card" data-id="B17" data-hex="#130E09">
+<div class="chip" style="background:#130E09;color:#FFFFFF"><span>B17</span></div>
+<div class="meta"><b>Warm 17</b><code>#130E09</code></div>
+<div class="cr">흰 글자 대비 19.2 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#130E09;color:#D3D0CD;border-color:#241F19">
+  <div class="rail" style="background:#0E0905;border-color:#241F19"><i style="background:#1C1712"></i><i style="background:#1C1712;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F4F1EF">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F4F1EF">Mina</span> <em style="border-color:#241F19;color:#9B9794">中</em></p>
+    <p style="color:#D3D0CD">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9B9794;border-left:2px solid #241F19;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#6C6865">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F4F1EF;color:#130E09">Export</span></div></div></div><div class="card" data-id="B18" data-hex="#1A1510">
+<div class="chip" style="background:#1A1510;color:#FFFFFF"><span>B18</span></div>
+<div class="meta"><b>Warm 20</b><code>#1A1510</code></div>
+<div class="cr">흰 글자 대비 18.1 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#1A1510;color:#D3D0CD;border-color:#2C2721">
+  <div class="rail" style="background:#140F0B;border-color:#2C2721"><i style="background:#231E19"></i><i style="background:#231E19;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F3F1EF">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F3F1EF">Mina</span> <em style="border-color:#2C2721;color:#9B9894">中</em></p>
+    <p style="color:#D3D0CD">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9B9894;border-left:2px solid #2C2721;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#6B6865">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F3F1EF;color:#1A1510">Export</span></div></div></div><div class="card" data-id="B19" data-hex="#211C16">
+<div class="chip" style="background:#211C16;color:#FFFFFF"><span>B19</span></div>
+<div class="meta"><b>Warm 23</b><code>#211C16</code></div>
+<div class="cr">흰 글자 대비 16.9 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#211C16;color:#D3D0CD;border-color:#332E28">
+  <div class="rail" style="background:#1B1610;border-color:#332E28"><i style="background:#2B251F"></i><i style="background:#2B251F;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F3F1EF">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F3F1EF">Mina</span> <em style="border-color:#332E28;color:#9B9894">中</em></p>
+    <p style="color:#D3D0CD">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9B9894;border-left:2px solid #332E28;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#6B6865">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F3F1EF;color:#211C16">Export</span></div></div></div><div class="card" data-id="B20" data-hex="#28231D">
+<div class="chip" style="background:#28231D;color:#FFFFFF"><span>B20</span></div>
+<div class="meta"><b>Warm 26</b><code>#28231D</code></div>
+<div class="cr">흰 글자 대비 15.6 · 검정 글자 대비 1.3</div>
+<div class="ui" style="background:#28231D;color:#D3D0CD;border-color:#3B362F">
+  <div class="rail" style="background:#221D17;border-color:#3B362F"><i style="background:#322D27"></i><i style="background:#322D27;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F3F1EF">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F3F1EF">Mina</span> <em style="border-color:#3B362F;color:#9B9894">中</em></p>
+    <p style="color:#D3D0CD">我们要的你的API情报是有什么样的</p>
+    <p style="color:#9B9894;border-left:2px solid #3B362F;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#6B6865">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F3F1EF;color:#28231D">Export</span></div></div></div><div class="card" data-id="B21" data-hex="#050B08">
+<div class="chip" style="background:#050B08;color:#FFFFFF"><span>B21</span></div>
+<div class="meta"><b>Green 14</b><code>#050B08</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#050B08;color:#CED2D0;border-color:#141C18">
+  <div class="rail" style="background:#020604;border-color:#141C18"><i style="background:#0C1410"></i><i style="background:#0C1410;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF3F1">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF3F1">Mina</span> <em style="border-color:#141C18;color:#959A97">中</em></p>
+    <p style="color:#CED2D0">我们要的你的API情报是有什么样的</p>
+    <p style="color:#959A97;border-left:2px solid #141C18;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#666A68">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF3F1;color:#050B08">Export</span></div></div></div><div class="card" data-id="B22" data-hex="#0A110E">
+<div class="chip" style="background:#0A110E;color:#FFFFFF"><span>B22</span></div>
+<div class="meta"><b>Green 17</b><code>#0A110E</code></div>
+<div class="cr">흰 글자 대비 19.1 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0A110E;color:#CED2D0;border-color:#1B221F">
+  <div class="rail" style="background:#060C09;border-color:#1B221F"><i style="background:#131A17"></i><i style="background:#131A17;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF3F1">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF3F1">Mina</span> <em style="border-color:#1B221F;color:#959997">中</em></p>
+    <p style="color:#CED2D0">我们要的你的API情报是有什么样的</p>
+    <p style="color:#959997;border-left:2px solid #1B221F;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#666A68">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF3F1;color:#0A110E">Export</span></div></div></div><div class="card" data-id="B23" data-hex="#111815">
+<div class="chip" style="background:#111815;color:#FFFFFF"><span>B23</span></div>
+<div class="meta"><b>Green 20</b><code>#111815</code></div>
+<div class="cr">흰 글자 대비 18.0 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#111815;color:#CED2D0;border-color:#222A27">
+  <div class="rail" style="background:#0C120F;border-color:#222A27"><i style="background:#1A211E"></i><i style="background:#1A211E;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F0F2F1">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F0F2F1">Mina</span> <em style="border-color:#222A27;color:#959997">中</em></p>
+    <p style="color:#CED2D0">我们要的你的API情报是有什么样的</p>
+    <p style="color:#959997;border-left:2px solid #222A27;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#666A68">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F0F2F1;color:#111815">Export</span></div></div></div><div class="card" data-id="B24" data-hex="#171F1B">
+<div class="chip" style="background:#171F1B;color:#FFFFFF"><span>B24</span></div>
+<div class="meta"><b>Green 23</b><code>#171F1B</code></div>
+<div class="cr">흰 글자 대비 16.8 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#171F1B;color:#CED2D0;border-color:#29312D">
+  <div class="rail" style="background:#111915;border-color:#29312D"><i style="background:#202924"></i><i style="background:#202924;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF3F1">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF3F1">Mina</span> <em style="border-color:#29312D;color:#959A97">中</em></p>
+    <p style="color:#CED2D0">我们要的你的API情报是有什么样的</p>
+    <p style="color:#959A97;border-left:2px solid #29312D;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#656A68">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF3F1;color:#171F1B">Export</span></div></div></div><div class="card" data-id="B25" data-hex="#1E2622">
+<div class="chip" style="background:#1E2622;color:#FFFFFF"><span>B25</span></div>
+<div class="meta"><b>Green 26</b><code>#1E2622</code></div>
+<div class="cr">흰 글자 대비 15.5 · 검정 글자 대비 1.4</div>
+<div class="ui" style="background:#1E2622;color:#CED2D0;border-color:#303934">
+  <div class="rail" style="background:#18201C;border-color:#303934"><i style="background:#28302C"></i><i style="background:#28302C;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#EFF3F1">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#EFF3F1">Mina</span> <em style="border-color:#303934;color:#959A97">中</em></p>
+    <p style="color:#CED2D0">我们要的你的API情报是有什么样的</p>
+    <p style="color:#959A97;border-left:2px solid #303934;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#666A68">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#EFF3F1;color:#1E2622">Export</span></div></div></div><div class="card" data-id="B26" data-hex="#0A080E">
+<div class="chip" style="background:#0A080E;color:#FFFFFF"><span>B26</span></div>
+<div class="meta"><b>Purple 14</b><code>#0A080E</code></div>
+<div class="cr">흰 글자 대비 19.9 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#0A080E;color:#D1D0D4;border-color:#1A181F">
+  <div class="rail" style="background:#060409;border-color:#1A181F"><i style="background:#131017"></i><i style="background:#131017;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F1F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F1F4">Mina</span> <em style="border-color:#1A181F;color:#99979C">中</em></p>
+    <p style="color:#D1D0D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#99979C;border-left:2px solid #1A181F;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#69686C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F1F4;color:#0A080E">Export</span></div></div></div><div class="card" data-id="B27" data-hex="#100E14">
+<div class="chip" style="background:#100E14;color:#FFFFFF"><span>B27</span></div>
+<div class="meta"><b>Purple 17</b><code>#100E14</code></div>
+<div class="cr">흰 글자 대비 19.2 · 검정 글자 대비 1.1</div>
+<div class="ui" style="background:#100E14;color:#D1D0D4;border-color:#211F25">
+  <div class="rail" style="background:#0B090F;border-color:#211F25"><i style="background:#19171D"></i><i style="background:#19171D;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F1F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F1F4">Mina</span> <em style="border-color:#211F25;color:#99979C">中</em></p>
+    <p style="color:#D1D0D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#99979C;border-left:2px solid #211F25;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#69686C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F1F4;color:#100E14">Export</span></div></div></div><div class="card" data-id="B28" data-hex="#17151B">
+<div class="chip" style="background:#17151B;color:#FFFFFF"><span>B28</span></div>
+<div class="meta"><b>Purple 20</b><code>#17151B</code></div>
+<div class="cr">흰 글자 대비 18.1 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#17151B;color:#D1D0D4;border-color:#29272D">
+  <div class="rail" style="background:#110F15;border-color:#29272D"><i style="background:#201E24"></i><i style="background:#201E24;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F1F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F1F4">Mina</span> <em style="border-color:#29272D;color:#99979B">中</em></p>
+    <p style="color:#D1D0D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#99979B;border-left:2px solid #29272D;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#69686C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F1F4;color:#17151B">Export</span></div></div></div><div class="card" data-id="B29" data-hex="#1E1C22">
+<div class="chip" style="background:#1E1C22;color:#FFFFFF"><span>B29</span></div>
+<div class="meta"><b>Purple 23</b><code>#1E1C22</code></div>
+<div class="cr">흰 글자 대비 16.9 · 검정 글자 대비 1.2</div>
+<div class="ui" style="background:#1E1C22;color:#D1D0D4;border-color:#302E35">
+  <div class="rail" style="background:#18161C;border-color:#302E35"><i style="background:#28252C"></i><i style="background:#28252C;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F1F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F1F4">Mina</span> <em style="border-color:#302E35;color:#99979B">中</em></p>
+    <p style="color:#D1D0D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#99979B;border-left:2px solid #302E35;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#69686C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F1F4;color:#1E1C22">Export</span></div></div></div><div class="card" data-id="B30" data-hex="#25232A">
+<div class="chip" style="background:#25232A;color:#FFFFFF"><span>B30</span></div>
+<div class="meta"><b>Purple 26</b><code>#25232A</code></div>
+<div class="cr">흰 글자 대비 15.5 · 검정 글자 대비 1.4</div>
+<div class="ui" style="background:#25232A;color:#D1D0D4;border-color:#38363D">
+  <div class="rail" style="background:#1F1D24;border-color:#38363D"><i style="background:#2F2D34"></i><i style="background:#2F2D34;width:60%"></i><i style="background:#FA6855;opacity:.9;width:45%;height:3px"></i></div>
+  <div class="body"><b style="color:#F2F1F4">Acme meeting</b>
+    <p><span class="d" style="background:#7C86F0"></span><span style="color:#F2F1F4">Mina</span> <em style="border-color:#38363D;color:#99979C">中</em></p>
+    <p style="color:#D1D0D4">我们要的你的API情报是有什么样的</p>
+    <p style="color:#99979C;border-left:2px solid #38363D;padding-left:6px">우리가 원하는 건 API 정보예요</p>
+    <p style="color:#69686C">10:05 &nbsp; Search transcript</p>
+    <span class="btn" style="background:#F2F1F4;color:#25232A">Export</span></div></div></div></div><div id="toast"></div>
+<script>
+document.querySelectorAll('.card').forEach(c=>c.onclick=()=>{document.querySelectorAll('.card').forEach(x=>x.classList.remove('pick'));c.classList.add('pick');
+navigator.clipboard?.writeText(c.dataset.hex).catch(()=>{});const t=document.getElementById('toast');t.textContent=c.dataset.id+' '+c.dataset.hex+' 선택 (복사됨)';t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1600);});
+</script></body></html>

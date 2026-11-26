@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Verba</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="both">
+<div class="dragbar" data-tauri-drag-region></div>
+
+<aside class="rail">
+  <div class="lights" data-tauri-drag-region></div>
+  <button class="find"><svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><span data-t="search"></span><kbd>⌘K</kbd></button>
+  <button class="btn newt" data-go="new"><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg><span data-t="new"></span></button>
+  <button class="recpill" id="recpill"><i class="rdot"></i><span data-t="recording"></span><span class="num" id="recpt"></span></button>
+  <div class="list" id="list"></div>
+  <div class="railfoot">
+    <button class="quiet" data-go="vocabs"><svg viewBox="0 0 16 16"><path d="M3 3.5h10M3 8h10M3 12.5h6"/></svg><span data-t="vocab"></span></button>
+    <button class="quiet" data-go="settings"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M3.6 12.4l1.1-1.1M11.3 4.7l1.1-1.1"/></svg><span data-t="settings"></span></button>
+    <div class="demo">
+      <div class="mini" id="uiLang"><button data-v="en">EN</button><button data-v="ko">한</button></div>
+      <div class="mini" id="theme"><button data-v="light">☀︎</button><button data-v="dark">☾</button></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <section class="screen" id="new">
+    <div class="scroll"><div class="col">
+      <h1 data-t="newTitle"></h1>
+      <p class="lede" data-t="lede"></p>
+      <div class="drop" id="drop">
+        <div class="wave" id="wave"></div>
+        <p data-t="dropTitle"></p>
+        <small data-t="formats"></small>
+        <button class="btn" id="choose" data-t="choose"></button>
+        <button class="quiet" id="record"><i class="rdot"></i><span data-t="record"></span></button>
+      </div>
+      <div class="sechead"><h2 data-t="fromMemos"></h2><label class="field"><svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg><input id="memoq" data-ph="searchRec"></label></div>
+      <table id="memos"></table>
+    </div></div>
+  </section>
+
+  <section class="screen" id="setup">
+    <div class="scroll"><div class="col">
+      <button class="quiet back" data-go="new"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg><span data-t="back"></span></button>
+      <h1 class="titleedit" id="stitle" contenteditable spellcheck="false"></h1>
+      <p class="lede" id="srcline"></p>
+      <div class="preview"><button class="play" id="pvplay"></button><span class="num" id="pvtime"></span><input type="range" id="pvseek" min="0" step="any" value="0"></div>
+      <div class="recbar" id="recbar"><i class="rdot"></i><span class="num" id="rectime"></span><span class="lvl" id="reclvl"></span></div>
+      <p class="help" data-t="autoTitleHelp"></p>
+      <div class="block">
+        <h2 data-t="speakers"></h2>
+        <p class="help" data-t="speakersHelp"></p>
+        <div id="people"></div>
+        <div class="past" id="past"></div>
+        <button class="quiet add" id="addp"><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg><span data-t="addSpeaker"></span></button>
+      </div>
+      <div class="block">
+        <h2 data-t="vocab"></h2>
+        <p class="help" data-t="vocabHelp"></p>
+        <div class="terms" id="terms"></div>
+        <p class="help" id="vnote"></p>
+        <div class="past" id="pastterms"></div>
+      </div>
+      <div class="block">
+        <h2 data-t="translation"></h2>
+        <p class="help" data-t="trHelp"></p>
+        <select class="select" id="trsel"></select>
+      </div>
+    </div></div>
+    <div class="bottom">
+      <span class="note"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span data-t="local"></span></span>
+      <span class="eta" id="eta"></span>
+      <button class="quiet" data-go="new" data-t="cancel"></button>
+      <button class="btn" id="start" data-t="transcribe"></button>
+    </div>
+  </section>
+
+  <section class="screen" id="proc">
+    <div class="scroll"><div class="col">
+      <h1 id="ptitle"></h1>
+      <p class="lede" id="pline"></p>
+      <div id="phases"></div>
+      <div class="steps" id="steps"></div>
+      <p class="aside"><svg viewBox="0 0 16 16"><path d="M8 2.5a4 4 0 0 0-4 4v2.5L2.8 11h10.4L12 9V6.5a4 4 0 0 0-4-4zM6.5 13a1.5 1.5 0 0 0 3 0"/></svg><span data-t="closeNote"></span></p>
+    </div></div>
+  </section>
+
+  <section class="screen" id="view">
+    <div class="vhead">
+      <div class="vrow">
+        <div class="vt"><h1 id="vtitle" class="titleedit" contenteditable spellcheck="false"></h1><button class="quiet" id="retitle"><svg viewBox="0 0 16 16"><path d="M8 2v3M8 11v3M2 8h3M11 8h3M4 4l1.8 1.8M10.2 10.2 12 12M4 12l1.8-1.8M10.2 5.8 12 4"/></svg><span data-t="autoTitle"></span></button></div>
+        <div style="display:flex;align-items:center">
+          <div class="seg" id="mode"><button data-v="orig" data-t="mOrig"></button><button data-v="both" data-t="mBoth" class="on"></button><button data-v="tr" data-t="mTr"></button></div>
+          <button class="quiet" id="copy"><svg viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5"/><path d="M11 5V3.8A1.3 1.3 0 0 0 9.7 2.5H3.8a1.3 1.3 0 0 0-1.3 1.3v5.9A1.3 1.3 0 0 0 3.8 11H5"/></svg><span data-t="copy"></span></button>
+          <button class="quiet" id="del"><svg viewBox="0 0 16 16"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5"/></svg><span data-t="del"></span></button>
+          <button class="btn" id="export" data-t="export"></button>
+        </div>
+      </div>
+      <div class="vmeta"><span id="vdate"></span><span id="vadded"></span><span class="num" id="vdur"></span><span class="marks" id="vlangs"></span><span id="vtr"></span><span id="vtime"></span></div>
+      <div class="past found" id="vfound"></div>
+      <div class="tools" id="tools"></div>
+    </div>
+    <div class="scroll" id="scroller"><article class="turns" id="turns"></article></div>
+    <footer class="player">
+      <div class="ctl">
+        <button class="quiet" id="rw" aria-label="Back 5 seconds"><svg viewBox="0 0 16 16"><path d="M7.5 4 3.5 8l4 4M12.5 4l-4 4 4 4"/></svg></button>
+        <button class="play" id="play" aria-label="Play"></button>
+        <button class="quiet" id="ff" aria-label="Forward 5 seconds"><svg viewBox="0 0 16 16"><path d="M8.5 4l4 4-4 4M3.5 4l4 4-4 4"/></svg></button>
+      </div>
+      <div class="clock num"><b id="tnow">00:00</b> / <span id="ttot"></span></div>
+      <div class="map" id="map"></div>
+      <button class="quiet rate num" id="rate">1×</button>
+    </footer>
+  </section>
+
+  <section class="screen" id="vocabs">
+    <div class="scroll"><div class="col">
+      <h1 data-t="vocab"></h1>
+      <p class="lede" data-t="vocabsHelp"></p>
+      <div class="terms" id="vlist"></div>
+    </div></div>
+  </section>
+
+  <section class="screen" id="settings">
+    <div class="scroll"><div class="col">
+      <h1 data-t="settings"></h1>
+      <div class="block">
+        <h2 data-t="you"></h2>
+        <p class="help" data-t="youHelp"></p>
+        <div class="person"><input id="myname" data-ph="name"><div class="langs" id="mylangs"></div></div>
+      </div>
+    </div></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+<audio id="au" preload="auto"></audio>
+<audio id="pv" preload="metadata"></audio>
+<script src="app.js"></script>
+</body>
+</html>
