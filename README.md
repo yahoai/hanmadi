@@ -12,6 +12,10 @@ Built for meetings where people switch between Korean, Chinese, English and Japa
 
 [![Hanmadi showing a meeting in Korean, Chinese, Japanese, English and French with English translations](docs/assets/screenshot.png)](docs/assets/demo.mp4)
 
+## Download
+
+[Download Hanmadi for macOS](https://github.com/yahoai/hanmadi/releases/latest) (Apple Silicon, macOS 13.3 or later). It's signed and notarized, and it updates itself. On first launch it downloads its speech and translation models (about 3 GB) once. After that it works offline.
+
 [Watch the 40-second demo](docs/assets/demo.mp4). The meeting in it is made up: `demo/make_demo.py` builds it with macOS voices, and `demo/video/record.mjs` records the video.
 
 Status: early. Tested on macOS (Apple Silicon). Windows is planned but not tested yet. This is a personal project: there's no support, but forks are welcome.
@@ -77,13 +81,22 @@ cargo tauri dev
 cargo test        # pipeline unit tests
 ```
 
-For now the app reads engines and models from the source checkout, so a packaged build is not ready yet.
+A dev build reads the engines and models from the checkout above. A packaged app carries the engines inside it and downloads the models to `~/Library/Application Support/io.github.yahoai.hanmadi/models/` on first launch.
+
+### Packaged build
+
+```bash
+scripts/build-engines.sh            # arm64 engines + LGPL ffmpeg, statically linked, into build/engines/
+scripts/publish-macos.sh patch      # sign, notarize, DMG + update archive, GitHub release
+```
+
+`publish-macos.sh` needs a Developer ID certificate, an App Store Connect API key for notarization and the updater signing key. The header of the script lists them.
 
 Transcripts are saved to `~/Library/Application Support/io.github.yahoai.hanmadi/transcripts/<id>/`.
 
 ## Third-party licenses
 
-Hanmadi is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). The bundled IBM Plex fonts are under the SIL Open Font License (`app/ui/fonts/OFL.txt`). Homebrew's ffmpeg is built with GPL components. That is fine for local use, but if you redistribute a bundle with ffmpeg inside, use an LGPL build.
+Hanmadi is MIT. The pieces it runs keep their own licenses: whisper.cpp and llama.cpp (MIT), sherpa-onnx (Apache-2.0), Whisper weights (MIT), Silero VAD (MIT), pyannote segmentation 3.0 (MIT), 3D-Speaker (Apache-2.0), Qwen3 (Apache-2.0). The bundled IBM Plex fonts are under the SIL Open Font License (`app/ui/fonts/OFL.txt`). The packaged app ships an LGPL build of FFmpeg (version and configure flags in `scripts/build-engines.sh`, source at https://ffmpeg.org). Homebrew's ffmpeg, which a dev build uses, includes GPL components. That's fine for local use but not for redistribution.
 
 ## License
 

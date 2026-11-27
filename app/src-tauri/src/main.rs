@@ -5,8 +5,11 @@ use std::fs;
 use std::path::PathBuf;
 use tauri::{AppHandle, Manager};
 
+mod engines;
+mod models;
 mod pipeline;
 mod record;
+mod updater;
 
 fn transcripts_dir(app: &AppHandle) -> Result<PathBuf, String> {
     let d = app.path().app_data_dir().map_err(|e| e.to_string())?.join("transcripts");
@@ -180,8 +183,7 @@ fn resume_job(app: AppHandle, id: String, fresh: bool, req: Option<pipeline::Job
 /// Dev/batch entry: `hanmadi --retranslate <id> [--to ko]`, `hanmadi --retitle <id> [--lang ko]`, `hanmadi --terms <id>`, `hanmadi --resume <id> [--fresh]`, or `hanmadi --transcribe <file> [--speakers "Mina:ko,zh;Wei:zh"] [--vocab "Nimbus,Orion"] [--to ko] [--title t]`
 fn cli(args: &[String]) -> Option<Result<String, String>> {
     let opt = |k: &str| args.iter().position(|a| a == k).and_then(|i| args.get(i + 1)).cloned();
-    // ponytail: macOS app-data path only; the GUI resolves it through Tauri
-    let dir = PathBuf::from(std::env::var("HOME").ok()?).join("Library/Application Support/io.github.yahoai.hanmadi/transcripts");
+    let dir = engines::app_data().join("transcripts");
     if let Some(id) = opt("--retranslate") {
         let to = opt("--to").unwrap_or_else(|| "ko".into());
         return Some(pipeline::retranslate(&dir.join(&id), &to).map(|_| id));
@@ -231,9 +233,14 @@ fn main() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_window_state::Builder::default().build())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .setup(|app| {
+            updater::spawn(app.handle().clone());
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             list_transcripts, get_transcript, save_transcript, delete_transcript, list_voice_memos, export_markdown, start_job, resume_job, estimate, probe_source, retitle, preview_audio, suggest_terms,
-            record::start_recording, record::stop_recording
+            record::start_recording, record::stop_recording, models::models_status, models::download_models
         ])
         // closing the window must not kill a job: hide it (macOS, the dock brings it back) or minimize it instead
         .on_window_event(|w, e| {

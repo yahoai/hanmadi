@@ -1,5 +1,6 @@
 //! Local LLM (Qwen3 4B Instruct on llama.cpp) for translation and titles. Nothing leaves the machine.
-use super::{root, text, Speaker};
+use super::{text, Speaker};
+use crate::engines::{engine, model};
 use serde_json::{json, Value};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
@@ -17,12 +18,11 @@ impl Drop for Server {
 }
 
 pub fn start() -> Result<Server, String> {
-    let r = root();
     let port = std::net::TcpListener::bind("127.0.0.1:0").and_then(|l| l.local_addr()).map_err(|e| e.to_string())?.port();
     let gpu_layers = if cfg!(all(target_os = "macos", target_arch = "aarch64")) { "99" } else { "0" };
-    let child = Command::new(r.join("tools/llama.cpp/build/bin/llama-server"))
+    let child = Command::new(engine("llama-server"))
         .arg("-m")
-        .arg(r.join("models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf"))
+        .arg(model("Qwen3-4B-Instruct-2507-Q4_K_M.gguf"))
         .args(["--port", &port.to_string(), "-c", "4096", "-ngl", gpu_layers, "--log-disable"])
         .stdout(Stdio::null())
         .stderr(Stdio::null())

@@ -1,18 +1,16 @@
 //! Running the engine binaries, and reading facts about a source file.
 use super::timing::iso;
 use serde_json::{json, Value};
-use std::path::Path;
+use std::path::PathBuf;
 use std::process::{Child, Command};
 use std::time::{Duration, Instant};
 
-pub fn ffmpeg() -> String {
-    // ponytail: Homebrew ffmpeg on the dev Mac, PATH elsewhere; bundle a static ffmpeg for distribution
-    let brew = "/opt/homebrew/bin/ffmpeg";
-    if Path::new(brew).exists() { brew.into() } else { "ffmpeg".into() }
+pub fn ffmpeg() -> PathBuf {
+    crate::engines::engine("ffmpeg")
 }
 
-fn ffprobe() -> String {
-    ffmpeg().replace("ffmpeg", "ffprobe")
+fn ffprobe() -> PathBuf {
+    crate::engines::engine("ffprobe")
 }
 
 pub fn exec(cmd: &mut Command) -> Result<String, String> {

@@ -20,6 +20,7 @@ use std::process::{Command, Stdio};
 use std::sync::Mutex;
 use std::time::Instant;
 use tauri::{AppHandle, Emitter};
+use crate::engines::{engine, model};
 
 pub use proc::{preview, probe};
 pub use redo::{retitle, retranslate, terms};
@@ -65,10 +66,6 @@ pub fn is_live(id: &str) -> bool {
     LIVE.lock().unwrap_or_else(|e| e.into_inner()).contains(id)
 }
 
-// ponytail: engines and models are read from the dev checkout; bundle them as app resources for distribution
-fn root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../..")
-}
 fn num(v: &Value, k: &str) -> f64 {
     v[k].as_f64().unwrap_or(0.0)
 }
@@ -148,6 +145,9 @@ pub fn run_blocking(transcripts: PathBuf, req: JobReq) -> Result<String, String>
 /// An existing `id` reruns that transcript in its folder, reusing what its work/ holds.
 fn launch(app: Option<AppHandle>, transcripts: &Path, req: JobReq, id: Option<String>) -> Result<String, String> {
     let id = id.unwrap_or_else(|| std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_millis().to_string());
+    if !crate::models::ready() {
+        return Err("models-missing".into());
+    }
     let live = || LIVE.lock().unwrap_or_else(|e| e.into_inner());
     if !live().insert(id.clone()) {
         return Err("busy".into());
@@ -280,10 +280,9 @@ fn language_steps(job: &mut Job, req: &JobReq, turns: &mut [Value], names: &[Spe
 }
 
 fn detect_speech(wav: &Path, work: &Path) -> Result<Vec<(f64, f64)>, String> {
-    let r = root();
     let out = exec(
-        Command::new(r.join("tools/sherpa/bin/sherpa-onnx-vad"))
-            .arg(format!("--silero-vad-model={}", r.join("models/silero_vad.onnx").display()))
+        Command::new(engine("sherpa-onnx-vad"))
+            .arg(format!("--silero-vad-model={}", model("silero_vad.onnx").display()))
             .arg(wav)
             .arg(work.join("vad.wav")),
     )?;
@@ -298,9 +297,8 @@ fn detect_speech(wav: &Path, work: &Path) -> Result<Vec<(f64, f64)>, String> {
 }
 
 fn diarize(job: &mut Job, wav: &Path, n_named: usize) -> Result<Vec<Diar>, String> {
-    let r = root();
-    let model = |p: &str| r.join("models").join(p).display().to_string();
-    let mut cmd = Command::new(r.join("tools/sherpa/bin/sherpa-onnx-offline-speaker-diarization"));
+    let model = |p: &str| model(p).display().to_string();
+    let mut cmd = Command::new(engine("sherpa-onnx-offline-speaker-diarization"));
     cmd.arg(if n_named >= 2 { format!("--clustering.num-clusters={n_named}") } else { "--clustering.cluster-threshold=0.9".into() })
         .arg(format!("--segmentation.pyannote-model={}", model("sherpa-onnx-pyannote-segmentation-3-0/model.onnx")))
         .arg(format!("--embedding.model={}", model("3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx")))
@@ -348,8 +346,8 @@ fn transcribe(job: &mut Job, req: &JobReq, pieces: &[Diar], pcm: &[i16], work: &
     let threads = std::thread::available_parallelism().map(|n| n.get().min(8)).unwrap_or(4).to_string();
     // ponytail: 100 files per call keeps the command line under Windows' 32K limit; costs one model load per batch
     for (bi, batch) in todo.chunks(100).enumerate() {
-        let mut cmd = Command::new(root().join("tools/whisper.cpp/build/bin/whisper-cli"));
-        cmd.arg("-m").arg(root().join("models/ggml-large-v3-turbo-q5_0.bin"));
+        let mut cmd = Command::new(engine("whisper-cli"));
+        cmd.arg("-m").arg(model("ggml-large-v3-turbo-q5_0.bin"));
         cmd.args(["-l", "auto", "-oj", "-np", "-t", &threads, "-mc", "0", "-sns"]);
         if !req.vocab.is_empty() {
             cmd.args(["--prompt", &req.vocab.join(", ")]);

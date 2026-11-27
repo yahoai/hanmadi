@@ -74,8 +74,30 @@ function texts(){
   document.documentElement.lang = L;
   document.querySelectorAll("[data-t]").forEach(e=>{ const v=T(e.dataset.t); if(typeof v==="string") e.textContent=v; });
   document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=T(e.dataset.ph));
-  loadList(); if(doc) renderView(); if(draft) renderSetup(); memos(); renderPrefs();
+  loadList(); if(doc) renderView(); if(draft) renderSetup(); memos(); renderPrefs(); if(mdl) mdlPaint(mdl.last);
 }
+
+/* ---------- first run: download the models (packaged app) ---------- */
+const gb = b => new Intl.NumberFormat(L,{style:"unit",unit:"gigabyte",maximumFractionDigits:1}).format(b/1e9);
+let mdl = null; // {bytes, last} while the models are missing
+async function modelsReady(){
+  const s = await invoke("models_status");
+  if(s.ready) return true;
+  mdl = {bytes:s.bytes, last:s.downloading ? {have:0,total:s.bytes} : null}; mdlPaint(mdl.last); go("models");
+  return false;
+}
+function mdlPaint(p, err){
+  if(p) mdl.last = p;
+  $("#mdlphase").hidden = !p; $("#mdlphase").className = "phase" + (err ? " stop" : p ? " run" : "");
+  if(p){ $("#mdlnum").textContent = T("mdlOf", gb(p.have), gb(p.total)); $("#mdlbar").style.width = `${Math.round(100*p.have/(p.total||1))}%`; }
+  $("#mdlerr").hidden = !err; $("#mdlerr").textContent = err || "";
+  const b = $("#mdlgo"); b.hidden = !!p && !err; b.textContent = err ? T("mdlRetry") : T("mdlStart", gb(mdl.bytes));
+}
+$("#mdlgo").onclick = ()=>{ mdlPaint(mdl.last || {have:0,total:mdl.bytes}); invoke("download_models"); };
+listen("models-progress", e=>{ const p = e.payload; if(!mdl) return;
+  if(p.error) return mdlPaint(mdl.last, p.error);
+  if(p.done){ mdl = null; toast(T("mdlDone")); go("new"); return; }
+  mdlPaint(p); });
 
 /* ---------- new: voice memos, drop, file ---------- */
 $("#wave").innerHTML = Array.from({length:28},(_,i)=>`<i style="height:${8+Math.round(30*Math.abs(Math.sin(i*1.7)*Math.cos(i*.45)))}px"></i>`).join("");
@@ -195,7 +217,7 @@ $("#start").onclick = async ()=>{
   const req = {...draft, vocab:draft.vocab.slice(-VOCAB_MAX), speakers, autoTitle:!draft.titleEdited, titleLang:L};
   // a stopped transcript with no stored request: run that id again with this setup
   try { const id = draft.resumeId ? (await invoke("resume_job",{id:draft.resumeId, fresh:!!draft.fresh, req}), draft.resumeId) : await invoke("start_job",{req}); draft=null; await open(id); }
-  catch(err){ toast(String(err)); }
+  catch(err){ if(err==="models-missing") return modelsReady(); toast(String(err)); }
 };
 
 /* ---------- progress ---------- */
@@ -402,7 +424,7 @@ mini("#theme",theme,v=>{ document.documentElement.dataset.theme=localStorage.the
 $("#play").innerHTML = ICON.play;
 window.addEventListener("focus", loadList);
 texts();
-(async()=>{ await loadList(); const first = list.find(d=>d.status==="done"); first ? open(first.id) : go("new"); })();
+(async()=>{ await loadList(); if(!await modelsReady()) return; const first = list.find(d=>d.status==="done"); first ? open(first.id) : go("new"); })();
 
 /* ---------- title: edit by hand, or let the local model suggest one ---------- */
 $("#vtitle").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); e.target.blur(); } });
